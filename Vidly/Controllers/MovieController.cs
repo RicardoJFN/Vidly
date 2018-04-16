@@ -7,11 +7,11 @@ using Vidly.Models;
 
 namespace Vidly.Controllers
 {
-    public class MoviesController : Controller
+    public class MovieController : Controller
     {
         private VidlyRepository _repo;
 
-        public MoviesController()
+        public MovieController()
         {
             _repo = new VidlyRepository();
         }
