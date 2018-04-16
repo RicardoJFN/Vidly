@@ -1,0 +1,23 @@
+﻿@model List<Vidly.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Movies</h2>
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(Model => Model.First().Name)
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Name, "Details", "Movies", new { id = item.Id }, null)
+                @*@Html.DisplayFor(modelItem => item.Name)*@
+            </td>
+        </tr>
+    }
+</table>

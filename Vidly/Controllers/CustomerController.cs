@@ -7,29 +7,31 @@ using Vidly.Models;
 
 namespace Vidly.Controllers
 {
-    public class MoviesController : Controller
+    public class CustomerController : Controller
     {
+
         private VidlyRepository _repo;
 
-        public MoviesController()
+        public CustomerController()
         {
             _repo = new VidlyRepository();
         }
 
 
-        [HttpGet]
+        // GET: Customer
         public ActionResult Index()
         {
-            List<Movie> movies = _repo.GetMovies().ToList();
+            List<Customer> customers = _repo.GetCustomers().ToList(); ;
 
-            return View(movies);
+            return View(customers);
         }
 
-        [HttpGet]
+
         public ActionResult Details(int id)
         {
-            Movie movie = _repo.GetMovieById(id);
-            return View(movie);
+            Customer customer = _repo.GetCustomerById(id);
+
+            return View(customer);
         }
     }
 }
