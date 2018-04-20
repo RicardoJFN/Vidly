@@ -17,7 +17,6 @@ namespace Vidly.Controllers
             _repo = new VidlyRepository();
         }
 
-
         // GET: Customer
         public ActionResult Index()
         {
