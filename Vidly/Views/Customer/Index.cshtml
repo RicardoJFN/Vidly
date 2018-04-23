@@ -24,7 +24,7 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(item.Name, "Details", "Customer", new { id = item.Id }, null)
+                        @Html.ActionLink(item.Name, "Edit", "Customer", new { id = item.Id }, null)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.MembershipType.Name)

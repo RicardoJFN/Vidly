@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -25,12 +26,53 @@ namespace Vidly.Controllers
             return View(customers);
         }
 
+        //GET: Create customer
+        public ActionResult New()
+        {
+            List<MembershipType> list = _repo.GetMembershipTypes().ToList();
+            var viewModel = new NewCustomerViewModel()
+            {
+                MembershipTypes = list
+            };
+            return View("CustomerForm", viewModel);
+        }
 
+        [HttpPost]
+        public ActionResult Save(Customer customer)
+        {
+            if (customer.Id == 0)
+                _repo.CreateCustomer(customer);
+            else
+                _repo.UpdateCustomer(customer);
+
+            return RedirectToAction("Index", "Customer");
+        }
+
+
+        //GET: Customer by id
         public ActionResult Details(int id)
         {
             Customer customer = _repo.GetCustomerById(id);
 
             return View(customer);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            Customer customer = _repo.GetCustomerById(id);
+
+            if (customer == null)
+                return HttpNotFound();
+
+
+            var newCustomerViewModel = new NewCustomerViewModel()
+            {
+                Customer = customer,
+                MembershipTypes = _repo.GetMembershipTypes().ToList()
+            };
+
+
+            return View("CustomerForm", newCustomerViewModel);
         }
     }
 }

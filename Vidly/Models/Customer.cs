@@ -18,12 +18,14 @@ namespace Vidly.Models
         public bool IsSubscribedToNewsLetter { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [Display(Name ="Date of birth")]
         public DateTime? Birthdate { get; set; }
 
         [Display(Name="Membership Type")]
         public MembershipType MembershipType { get; set; }
 
         [ForeignKey("MembershipType")]
+        [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
     }
 }

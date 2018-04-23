@@ -12,22 +12,26 @@ namespace Vidly.Models
         public int Id { get; set; }
 
         [Display(Name ="Movie: ")]
+        [Required]
         public string Name { get; set; }
 
         [Display(Name = "Release Date: ")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dddd, MMMM d, yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [Required]
         public DateTime ReleaseDate { get; set; }
 
         [Display(Name ="Date Added: ")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dddd, MMMM d, yyyy}")]
-        public DateTime DateAdded { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? DateAdded { get; set; }
 
         [Display(Name = "Number in Stock: ")]
+        [Required]
         public int Stock { get; set; }
 
         public Genre Genre { get; set; }
 
         [ForeignKey("Genre")]
+        [Required]
         public int GenreId { get; set; }
     }
 }
