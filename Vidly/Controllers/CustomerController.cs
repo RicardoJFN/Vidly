@@ -32,14 +32,28 @@ namespace Vidly.Controllers
             List<MembershipType> list = _repo.GetMembershipTypes().ToList();
             var viewModel = new NewCustomerViewModel()
             {
+                Customer = new Customer(),
                 MembershipTypes = list
             };
             return View("CustomerForm", viewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                NewCustomerViewModel viewModel = new NewCustomerViewModel()
+                {
+                    Customer = customer,
+                    MembershipTypes = _repo.GetMembershipTypes()
+                };
+
+                return View("CustomerForm", viewModel);
+            }
+
+
             if (customer.Id == 0)
                 _repo.CreateCustomer(customer);
             else

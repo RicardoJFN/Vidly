@@ -18,7 +18,7 @@ namespace Vidly.Models
         [Display(Name = "Release Date: ")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Required]
-        public DateTime ReleaseDate { get; set; }
+        public DateTime ReleaseDate { get; set; } = DateTime.MinValue;
 
         [Display(Name ="Date Added: ")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
@@ -26,7 +26,8 @@ namespace Vidly.Models
 
         [Display(Name = "Number in Stock: ")]
         [Required]
-        public int Stock { get; set; }
+        [Range(1, 20, ErrorMessage = "The field number in stock must be between 1 and 20")]
+        public int Stock { get; set; } = 0;
 
         public Genre Genre { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -30,8 +31,15 @@ namespace Vidly.Controllers
         [HttpGet]
         public ActionResult New()
         {
+            Movie newMovie = new Movie()
+            {
+                Stock = 0,
+                ReleaseDate = DateTime.MinValue
+            };
+
             var movieViewModel = new NewMovieViewModel()
             {
+                Movie = newMovie,
                 Genres = _repo.GetGenres()
             };
 
@@ -39,9 +47,33 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
-            _repo.NewMovie(movie);
+            if (!ModelState.IsValid)
+            {
+                Movie newMovie = new Movie()
+                {
+                    Stock = 0,
+                    ReleaseDate = DateTime.MinValue
+                };
+
+                NewMovieViewModel viewModel = new NewMovieViewModel()
+                {
+                    Genres = _repo.GetGenres(),
+                    Movie = newMovie
+                };
+                
+
+                return View("New", viewModel);
+            }
+
+            if (movie.Id == 0)
+                _repo.NewMovie(movie);
+            else
+                _repo.UpdateMovie(movie);
+
+
             return RedirectToAction("Index", "Movie");
         }
 
@@ -52,6 +84,7 @@ namespace Vidly.Controllers
             return View(movie);
         }
 
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             Movie movie = _repo.GetMovieById(id);
