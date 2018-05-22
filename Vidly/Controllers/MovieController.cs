@@ -31,15 +31,10 @@ namespace Vidly.Controllers
         [HttpGet]
         public ActionResult New()
         {
-            Movie newMovie = new Movie()
-            {
-                Stock = 0,
-                ReleaseDate = DateTime.MinValue
-            };
-
+            
             var movieViewModel = new NewMovieViewModel()
             {
-                Movie = newMovie,
+                
                 Genres = _repo.GetGenres()
             };
 
@@ -58,10 +53,9 @@ namespace Vidly.Controllers
                     ReleaseDate = DateTime.MinValue
                 };
 
-                NewMovieViewModel viewModel = new NewMovieViewModel()
+                NewMovieViewModel viewModel = new NewMovieViewModel(movie)
                 {
-                    Genres = _repo.GetGenres(),
-                    Movie = newMovie
+                    Genres = _repo.GetGenres()
                 };
                 
 
@@ -89,9 +83,8 @@ namespace Vidly.Controllers
         {
             Movie movie = _repo.GetMovieById(id);
 
-            var newMovieViewModel = new NewMovieViewModel()
+            var newMovieViewModel = new NewMovieViewModel(movie)
             {
-                Movie = movie,
                 Genres = _repo.GetGenres()
             };
 

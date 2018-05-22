@@ -83,6 +83,13 @@ namespace Vidly.Models
             return _context.Customers.Include("MembershipType").SingleOrDefault(c => c.Id == id);
         }
 
+        public void DeleteCustomer(Customer customer)
+        {
+            _context.Customers.Remove(customer);
+
+            _context.SaveChanges();
+        }
+
         public IEnumerable<MembershipType> GetMembershipTypes()
         {
             return _context.MembershipTypes.ToList();
